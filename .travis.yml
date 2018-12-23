@@ -7,3 +7,23 @@ before_install:
 
 script:
   - docker run ae1663830a/react-docker npm run test -- --coverage
+
+deploy:
+  # data from aws (look for "Elastic Beanstalk", "S3", "IAM")
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "react-docker"
+  env: "ReactDocker-env"
+  bucket_name: "elasticbeanstalk-us-east-2-457461267368"
+  bucket_path: "react-docker"
+  on:
+    # deploy only if changes have been made on master branch
+    branch: master
+
+  # 1. Create user with full permissions to elasticbeanstalk on AWS
+  # 2. Copy Access key ID and Secret access key from AWS to
+  # Travis-CI -> react-docker -> More options -> Environment Variables
+  # 3. Provide added variables here
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
