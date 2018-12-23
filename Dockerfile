@@ -11,5 +11,5 @@ RUN npm run build
 
 # Second stage - copy static files to nginx server and start it
 FROM nginx
-
+EXPOSE 80
 COPY --from=builder /opt/frontend-app/build /usr/share/nginx/html
